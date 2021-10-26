@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "A model that contain a basic authentication with token and refresh token",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon --exec babel-node src/app.js",
-    "start2": "nodemon --config nodemon2.json --exec babel-node src/app.js",
-    "test": "NODE_ENV=test mocha --require @babel/register --timeout 100000 ./test/**/*.js --exit",
+    "start.docker": "node src/app.js",
+    "start": "pm2 src/app.js",
+    "dev": "nodemon src/app.js",
+    "dev.docker": "nodemon --legacy-watch src/app.js",
+    "test": "NODE_ENV=test mocha --timeout 100000 ./test/**/*.js --exit",
     "lint": "npm run lint:sources && npm run lint:test",
     "lint:test": "./node_modules/eslint/bin/eslint.js 'test/**/**.js'",
     "lint:sources": "./node_modules/eslint/bin/eslint.js 'src/**/**.js'",
@@ -28,7 +31,7 @@
   "author": "Aurélien BAUER",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -40,25 +43,22 @@
     "moment-timezone": "^0.5.27",
     "mongoose": "^5.8.1",
     "node-localstorage": "^2.1.5",
+    "pm2": "^5.1.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
-    "winston": "^3.2.1"
+    "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/node": "^7.7.4",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/register": "^7.7.4",
     "chai": "^4.2.0",
-    "eslint": "^6.7.2",
+    "eslint": "^8.0.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.17.0",
     "husky": "^3.1.0",
-    "mocha": "^6.2.2",
+    "mocha": "^9.1.3",
     "nodemon": "^2.0.2",
-    "open-cli": "^5.0.0",
+    "open-cli": "^7.0.1",
     "supertest": "^4.0.2"
   }
 }

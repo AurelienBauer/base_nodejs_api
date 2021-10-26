@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 
 /**
  * Refresh Token Schema
- * @private
  */
 const refreshTokenSchema = new mongoose.Schema({
   token: {

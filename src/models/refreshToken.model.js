@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import moment from 'moment-timezone';
-import refreshTokenSchema from '../schemas/refreshToken.schema';
-import ErrorApi from '../services/ErrorApi.service';
-import { generateRefreshToken } from '../services/auth.service';
+import refreshTokenSchema from '../schemas/refreshToken.schema.js';
+import ErrorApi from '../services/ErrorApi.service.js';
+import { generateRefreshToken } from '../services/auth.service.js';
 
 class RefreshTokenModel {}
 

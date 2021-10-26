@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
-import { logger } from '../services/logger.service';
-import ErrorApi from '../services/ErrorApi.service';
+import { logger } from '../services/logger.service.js';
+import ErrorApi from '../services/ErrorApi.service.js';
 
 /**
  * Error handler. Send stacktrace only during development

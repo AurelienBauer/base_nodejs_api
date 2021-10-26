@@ -1,34 +1,32 @@
-import { createLogger, format, transports } from 'winston';
+import winston from 'winston';
 
-const logger = createLogger({
+export const logger = winston.createLogger({
   level: 'info',
-  format: format.combine(
-    format.timestamp({
+  format: winston.format.combine(
+    winston.format.timestamp({
       format: 'DD/MM/YYYY HH:mm:ss',
     }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json(),
+    winston.format.errors({ stack: true }),
+    winston.format.splat(),
+    winston.format.json(),
   ),
   defaultMeta: { service: process.env.PROJECT_NAME },
   transports: [
-    new transports.File({ filename: 'error.log', level: 'error' }),
-    new transports.File({ filename: 'combined.log' }),
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
   ],
 });
 
-if (process.env.NODE_ENV === 'development') {
-  logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(),
-      format.simple(),
+if (process.env.NODE_ENV === 'development' || process.env.RUN_ON_DOCKER) {
+  logger.add(new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple(),
     ),
   }));
 }
 
-function logRequest(req, res, next) {
+export const logRequest = (req, res, next) => {
   logger.info(req.url);
   next();
-}
-
-export { logger, logRequest };
+};

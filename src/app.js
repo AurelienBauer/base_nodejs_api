@@ -5,10 +5,10 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import https from 'https';
 import fs from 'fs';
-import { connectDb } from './services/mongoose.service';
-import { logger, logRequest } from './services/logger.service';
-import route from './routes';
-import { notFound, handler } from './middlewares/error.middleware';
+import connectDb from './services/mongoose.service.js';
+import { logger, logRequest } from './services/logger.service.js';
+import route from './routes/index.js';
+import { notFound, handler } from './middlewares/error.middleware.js';
 
 const app = express();
 
@@ -41,8 +41,7 @@ const options = {
 const runServer = () => https.createServer(options, app).listen(process.env.PORT, () => {
   logger.info(`${process.env.PROJECT_NAME} - Server started on port ${process.env.PORT} (${process.env.NODE_ENV}).`);
 }).on('error', (err) => {
-  logger.error(`Launch server error: ${err}`);
-  setTimeout(runServer, 5000);
+  logger.error(`Run server error: ${err}`);
 });
 
 connectDb();

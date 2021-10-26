@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import controller from '../controllers/auth.controller';
-import { checkToken, checkRefreshToken } from '../middlewares/auth.middleware';
-import { loginUser, refreshToken } from '../validator/auth.validator';
+import { login, refreshToken, status } from '../controllers/auth.controller.js';
+import { checkToken, checkRefreshToken } from '../middlewares/auth.middleware.js';
+import { loginUserValidator, refreshTokenValidator } from '../validator/auth.validator.js';
 
 const router = Router();
 
@@ -53,10 +53,11 @@ const router = Router();
  * @apiError (Bad Request 400)  ValidationError   Some parameters may contain invalid values
  * @apiError (Unauthorized 401) Unauthorized      Incorrect refreshToken
  */
-router.route('/login')
+router
   .post(
-    loginUser,
-    controller.login,
+    '/login',
+    loginUserValidator,
+    login,
   );
 
 /**
@@ -96,11 +97,12 @@ router.route('/login')
  * @apiError (Unauthorized 401) Unauthorized      Incorrect email or password
  *                                                (TO DO in file auth.controller)
  */
-router.route('/refreshToken')
+router
   .post(
-    refreshToken,
+    '/refreshToken',
+    refreshTokenValidator,
     checkRefreshToken,
-    controller.refreshToken,
+    refreshToken,
   );
 
 /**
@@ -134,10 +136,11 @@ router.route('/refreshToken')
  * @apiError (Unauthorized 401) Unauthorized      Incorrect email or password
  *                                                (TO DO in file auth.controller)
  */
-router.route('/status')
+router
   .get(
+    '/status',
     checkToken,
-    controller.status,
+    status,
   );
 
 export default router;

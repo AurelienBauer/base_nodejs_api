@@ -1,25 +1,30 @@
 import mongoose from 'mongoose';
-import { logger } from './logger.service';
+import { logger } from './logger.service.js';
+import { sysStatus, mongoSt } from './sysStatus.service.js';
 
-// print mongoose logs in dev env
+/* print mongoose logs in development mode */
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
 }
 
-const connectDb = () => mongoose.connect(process.env.MONGO_HOST + process.env.PROJECT_NAME,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  },
-  (err) => {
-    if (!err) {
-      logger.info(`${process.env.PROJECT_NAME} - Connected to mongoDB ${process.env.MONGO_HOST}.`);
-    } else {
-      logger.error(`MongoDB connection error: ${err}`);
-      setTimeout(connectDb, 5000);
-    }
-  });
+const connectDb = () => {
+  sysStatus.mongodb_status = mongoSt.CONNECTING;
+  return mongoose.connect(process.env.MONGO_HOST,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    },
+    (err) => {
+      if (!err) {
+        sysStatus.mongodb_status = mongoSt.CONNECTED;
+        logger.info(`${process.env.PROJECT_NAME} - Connected to mongoDB ${process.env.MONGO_HOST}.`);
+      } else {
+        sysStatus.mongodb_status = mongoSt.FAIL;
+        logger.error(`MongoDB connection error: ${err}`);
+        setTimeout(connectDb, 5000);
+      }
+    });
+};
 
-// eslint-disable-next-line import/prefer-default-export
-export { connectDb };
+export default connectDb;

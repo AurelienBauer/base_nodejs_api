@@ -1,6 +1,6 @@
 import { validationResult } from 'express-validator';
 import httpStatus from 'http-status';
-import ErrorApi from '../services/ErrorApi.service';
+import ErrorApi from '../services/ErrorApi.service.js';
 
 const checkResult = (req, res, next) => {
   const errors = validationResult(req);
@@ -14,5 +14,4 @@ const checkResult = (req, res, next) => {
   return next();
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { checkResult };
+export default checkResult;

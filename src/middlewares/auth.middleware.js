@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 import httpStatus from 'http-status';
 import moment from 'moment-timezone';
-import ErrorApi from '../services/ErrorApi.service';
-import RefreshToken from '../models/refreshToken.model';
-import { getTokenInformation } from '../services/auth.service';
+import ErrorApi from '../services/ErrorApi.service.js';
+import RefreshToken from '../models/refreshToken.model.js';
+import { getTokenInformation } from '../services/auth.service.js';
 
 const checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization;

@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 /**
  * Class representing an API error.
  */
-class ErrorApi extends Error {
+export default class ErrorApi extends Error {
   constructor(
     {
       message,
@@ -21,5 +21,3 @@ class ErrorApi extends Error {
     this.stack = stack;
   }
 }
-
-export default ErrorApi;

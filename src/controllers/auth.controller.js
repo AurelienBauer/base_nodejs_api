@@ -1,9 +1,9 @@
 import httpStatus from 'http-status';
-import ErrorApi from '../services/ErrorApi.service';
-import RefreshToken from '../models/refreshToken.model';
-import { generateAccessToken } from '../services/auth.service';
+import ErrorApi from '../services/ErrorApi.service.js';
+import RefreshToken from '../models/refreshToken.model.js';
+import { generateAccessToken } from '../services/auth.service.js';
 
-exports.login = [
+const login = [
   async (req, res, next) => {
     if (req.body.apiId && req.body.apiName) {
       if (req.body.apiId !== process.env.CLIENT_SECRET_ID
@@ -65,7 +65,7 @@ exports.login = [
   },
 ];
 
-exports.refreshToken = (req, res, next) => {
+const refreshToken = (req, res, next) => {
   try {
     let playload;
     if (req.api) {
@@ -94,16 +94,18 @@ exports.refreshToken = (req, res, next) => {
   }
 };
 
-exports.status = (req, res, next) => {
+const status = (req, res, next) => {
   try {
     const auth = (req.user) ? req.user : req.api;
     res.status(httpStatus.OK)
       .json({
         auth,
-        status: 'authenticated',
+        status: 'Authenticated',
         success: true,
       });
   } catch (err) {
     next(err);
   }
 };
+
+export { login, refreshToken, status }

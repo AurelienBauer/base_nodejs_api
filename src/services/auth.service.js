@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import moment from 'moment-timezone';
-import UserModel from '../models/user.model';
+import UserModel from '../models/user.model.js';
 
 function _token(playload, expiresIn) {
   const _playload = Object.assign(playload, {
@@ -9,19 +9,19 @@ function _token(playload, expiresIn) {
   return jwt.sign(_playload, process.env.JWT_SECRET, { expiresIn });
 }
 
-const generateAccessToken = (playload) => {
+export const generateAccessToken = (playload) => {
   const expiresIn = moment().add(process.env.JWT_EXPIRATION_DELAY, 'hours');
   const token = _token(playload, expiresIn.unix());
   return { token, expiresIn: expiresIn.toDate() };
 };
 
-const generateRefreshToken = (playload) => {
+export const generateRefreshToken = (playload) => {
   const expiresIn = moment().add(30, 'days').toDate();
   const token = _token(playload, 0);
   return { token, expiresIn };
 };
 
-const getTokenInformation = async (decodedToken) => {
+export const getTokenInformation = async (decodedToken) => {
   if (decodedToken.isAUser) {
     const user = await UserModel.getUserByEmail(decodedToken.email);
     return {
@@ -36,5 +36,3 @@ const getTokenInformation = async (decodedToken) => {
     },
   };
 };
-
-export { generateAccessToken, generateRefreshToken, getTokenInformation };

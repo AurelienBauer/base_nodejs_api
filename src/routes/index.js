@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import auth from './auth.route';
+import { status } from '../controllers/sys.controller.js';
+import auth from './auth.route.js';
 
 const router = Router();
 
-router.get('/status', (req, res) => res.send('OK'));
+router.get('/status', status);
 
 router.use('/auth', auth);
 

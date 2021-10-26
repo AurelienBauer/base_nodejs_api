@@ -1,65 +1,64 @@
 {
-	"name": "which-boxed-primitive",
-	"version": "1.0.2",
-	"description": "Which kind of boxed JS primitive is this?",
-	"main": "index.js",
-	"scripts": {
-		"preversion": "auto-changelog",
-		"prepublish": "not-in-publish || safe-publish-latest",
-		"lint": "eslint --ext=js,mjs .",
-		"pretest": "npm run lint",
-		"tests-only": "nyc tape 'test/**/*.js'",
-		"test": "npm run tests-only",
-		"posttest": "aud --production",
-		"version": "auto-changelog && git add CHANGELOG.md",
-		"postversion": "auto-changelog && git add CHANGELOG.md && git commit --no-edit --amend && git tag -f \"v$(node -e \"console.log(require('./package.json').version)\")\""
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/inspect-js/which-boxed-primitive.git"
-	},
-	"keywords": [
-		"boxed",
-		"primitive",
-		"object",
-		"ecmascript",
-		"javascript",
-		"which"
-	],
-	"author": "Jordan Harband <ljharb@gmail.com>",
-	"funding": {
-		"url": "https://github.com/sponsors/ljharb"
-	},
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/inspect-js/which-boxed-primitive/issues"
-	},
-	"homepage": "https://github.com/inspect-js/which-boxed-primitive#readme",
-	"dependencies": {
-		"is-bigint": "^1.0.1",
-		"is-boolean-object": "^1.1.0",
-		"is-number-object": "^1.0.4",
-		"is-string": "^1.0.5",
-		"is-symbol": "^1.0.3"
-	},
-	"devDependencies": {
-		"@ljharb/eslint-config": "^17.3.0",
-		"aud": "^1.1.3",
-		"auto-changelog": "^2.2.1",
-		"eslint": "^7.15.0",
-		"has-symbols": "^1.0.1",
-		"in-publish": "^2.0.1",
-		"nyc": "^10.3.2",
-		"object-inspect": "^1.9.0",
-		"safe-publish-latest": "^1.1.4",
-		"tape": "^5.0.1"
-	},
-	"auto-changelog": {
-		"output": "CHANGELOG.md",
-		"template": "keepachangelog",
-		"unreleased": false,
-		"commitLimit": false,
-		"backfillLimit": false,
-		"hideCredit": true
-	}
+  "name": "base_api",
+  "version": "1.0.0",
+  "description": "A model that contain a basic authentication with token and refresh token",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start.docker": "node src/app.js",
+    "start": "pm2 src/app.js",
+    "dev": "nodemon src/app.js",
+    "dev.docker": "nodemon --legacy-watch src/app.js",
+    "test": "NODE_ENV=test mocha --timeout 100000 ./test/**/*.js --exit",
+    "lint": "npm run lint:sources && npm run lint:test",
+    "lint:test": "./node_modules/eslint/bin/eslint.js 'test/**/**.js'",
+    "lint:sources": "./node_modules/eslint/bin/eslint.js 'src/**/**.js'",
+    "docs": "apidoc -i src -o doc",
+    "postdocs": "open-cli doc/index.html"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test"
+    }
+  },
+  "keywords": [
+    "nodeJs",
+    "api",
+    "express",
+    "auth"
+  ],
+  "author": "Aurélien BAUER",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.3.0",
+    "helmet": "^3.21.2",
+    "http-status": "^1.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "moment-timezone": "^0.5.27",
+    "mongoose": "^5.8.1",
+    "node-localstorage": "^2.1.5",
+    "pm2": "^5.1.2",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "7.2.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4",
+    "husky": "^3.1.0",
+    "mocha": "^9.1.3",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  }
 }

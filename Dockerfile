@@ -6,11 +6,11 @@ RUN mkdir -p /var/www/cache
 
 WORKDIR /var/www/cache
 
-RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=FR/ST=France/L=_/O=_/CN=_" -keyout server.key.pem -out server.cert.pem
-
 COPY package.json ./
 
 RUN npm install && rm package.json
+
+RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=FR/ST=France/L=_/O=_/CN=_" -keyout server.key.pem -out server.cert.pem
 
 RUN mkdir -p /var/www/base_nodejs_api
 

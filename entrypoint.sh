@@ -3,8 +3,7 @@
 if [[ -d /var/www/cache/node_modules ]]
 then
   echo "Moving node_modules from cache to working directory can take a while..."
-  [ ! -d /var/www/base_nodejs_api/node_modules ] && mkdir /var/www/base_nodejs_api/node_modules
-  find /var/www/cache/node_modules -name '*.*' -exec mv -f {} /var/www/base_nodejs_api/node_modules \;
+  mv -f /var/www/cache/node_modules /var/www/base_nodejs_api/
   echo "Move node_modules => DONE"
 fi
 
@@ -26,4 +25,4 @@ then
   echo "Move server.key.pem from cache to working directory"
 fi
 
-exec ls -la ../cache/
+exec npm run dev.docker

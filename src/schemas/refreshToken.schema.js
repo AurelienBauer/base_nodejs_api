@@ -11,17 +11,13 @@ const refreshTokenSchema = new mongoose.Schema({
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     unique: false,
-  },
-  user: {
-    type: 'String',
-    unique: true,
-    require: true,
   },
   expiresIn: {
     type: Date,
     require: true,
   },
-});
+}, { timestamps: true });
 
 export default refreshTokenSchema;

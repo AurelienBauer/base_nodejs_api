@@ -33,6 +33,13 @@ const checkToken = (req, res, next) => {
 const checkRefreshToken = async (req, res, next) => {
   let token = req.body.refreshToken;
 
+  if (!process.env.USE_REFRESHTOKEN || process.env.USE_REFRESHTOKEN === '0') {
+    return next(new ErrorApi({
+      status: httpStatus.UNAUTHORIZED,
+      message: 'RefreshToken feature is not unable.',
+    }));
+  }
+
   if (token) {
     if (token.startsWith('Bearer ')) {
       token = token.slice(7, token.length);

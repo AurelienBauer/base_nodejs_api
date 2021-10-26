@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import moment from 'moment-timezone';
-import UserModel from '../models/user.model.js';
+import bcrypt from 'bcrypt';
+import UserModel from '../models/users.model.js';
 
 function _token(playload, expiresIn) {
   const _playload = Object.assign(playload, {
@@ -36,3 +37,19 @@ export const getTokenInformation = async (decodedToken) => {
     },
   };
 };
+
+export const cryptPassword = (password) => new Promise((resolve, reject) => {
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return reject(err);
+
+    return bcrypt.hash(password, salt, (hashErr, hash) => (err ? reject(hashErr) : resolve(hash)));
+  });
+});
+
+export const comparePassword = (password, hashPassword) => new Promise(
+  (resolve, reject) => bcrypt.compare(
+    password,
+    hashPassword,
+    (err, isPasswordMatch) => (err ? reject(err) : resolve(isPasswordMatch)),
+  ),
+);

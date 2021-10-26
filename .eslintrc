@@ -4,7 +4,16 @@
   ],
   "rules": {
      "no-underscore-dangle": "off",
-     "import/extensions": "ignorePackages"
-    // "template-curly-spacing": "off"
+     "import/extensions": [
+       "off",
+       "ignorePackages"
+    ]
+  },
+  // to remove <<React version was set to "detect">> warning
+  "settings": {
+    "react": {
+      "version": "999.999.999"
+    }
   }
+
 }

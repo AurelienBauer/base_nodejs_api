@@ -12,9 +12,9 @@ COPY package.json ./
 
 RUN npm install && rm package.json
 
-RUN mkdir -p /var/www/blank_nodejs_api
+RUN mkdir -p /var/www/base_nodejs_api
 
-WORKDIR /var/www/blank_nodejs_api
+WORKDIR /var/www/base_nodejs_api
 
 #ENTRYPOINT [ "mv", "/var/www/cache/*", "." ]
 

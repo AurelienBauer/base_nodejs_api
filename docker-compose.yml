@@ -8,9 +8,9 @@ services:
     depends_on:
       - mongodb
     volumes:
-      - .:/var/www/blank_nodejs_api/
+      - .:/var/www/base_nodejs_api/
     environment:
-      MONGO_HOST: mongodb://mongodb:27017/blank_api
+      MONGO_HOST: mongodb://mongodb:27017/base_api
       NODE_ENV: development
       RUN_ON_DOCKER:
     command: ./entrypoint.sh

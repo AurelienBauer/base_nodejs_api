@@ -2,7 +2,7 @@
 import httpStatus from 'http-status';
 import request from 'supertest';
 import chai from 'chai';
-import app from '../../src/app';
+import app from '../../src/app.js';
 
 const { expect } = chai;
 const agent = request(app);
@@ -14,6 +14,18 @@ describe('Global API Integration Tests', () => {
       .end((err, res) => {
         expect(res.statusCode).to.equal(httpStatus.NOT_FOUND);
         expect(res.body.success).to.equal(false);
+        done();
+      });
+  });
+
+  it('GET request api status', (done) => {
+    agent.get('/status')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.statusCode).to.equal(httpStatus.OK);
+        expect(res.body.api_name).to.equal(process.env.PROJECT_NAME);
+        expect(res.body.api_status).to.equal('Running');
+        expect(res.body.success).to.equal(true);
         done();
       });
   });

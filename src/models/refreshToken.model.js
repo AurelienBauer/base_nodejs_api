@@ -9,11 +9,10 @@ class RefreshTokenModel {}
 
 refreshTokenSchema.statics = {
   async generateAndInsertRefreshToken({
-    email = null, id = null, isAUser, apiName = null,
+    username = null, userId = null,
   }) {
     try {
-      const user = (isAUser) ? email : apiName;
-      let refreshToken = await this.findOne({ user });
+      let refreshToken = await this.findOne({ userId });
 
       if (refreshToken) {
         if (Date.parse(moment().toDate()) > Date.parse(refreshToken.expiresIn)) {
@@ -23,13 +22,12 @@ refreshTokenSchema.statics = {
         }
       }
       refreshToken = generateRefreshToken({
-        user,
-        isAUser,
+        username,
       });
       await new this({
         token: refreshToken.token,
-        user,
-        userId: id,
+        username,
+        userId,
         expiresIn: refreshToken.expiresIn,
       }).save();
       return refreshToken;

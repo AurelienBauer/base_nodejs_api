@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import ErrorApi from '../services/ErrorApi.service.js';
 import RefreshToken from '../models/refreshToken.model.js';
 import { comparePassword, generateAccessToken } from '../services/auth.service.js';
-import User from '../models/users.model.js';
+import Users from '../models/users.model.js';
 
 const login = [
   async (req, res, next) => {
@@ -13,7 +13,7 @@ const login = [
         errors: ['BAD_CREDENTIALS'],
       });
 
-      const user = await User.findOne({ username: req.body.username, isDeleted: false });
+      const user = await Users.findOne({ username: req.body.username, isDeleted: false });
       if (!user) {
         return next(badCredentials);
       }

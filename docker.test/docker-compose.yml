@@ -1,0 +1,14 @@
+version: "3.1"
+
+services:
+  nodeapi:
+    build:
+      context: ../
+      dockerfile: ./docker.test/Dockerfile
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_HOST: mongodb://mongodb:27017/test_base_api
+  mongodb:
+    image: mongo:5.0.3
+    restart: always

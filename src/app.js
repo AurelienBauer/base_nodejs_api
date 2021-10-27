@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import https from 'https';
 import fs from 'fs';
 import connectDb from './services/mongoose.service.js';
-import { logger, logRequest } from './services/logger.service.js';
+import { logger, logRequestIfNotLogged } from './services/logger.service.js';
 import route from './routes/index.js';
 import { notFound, handler } from './middlewares/error.middleware.js';
 
@@ -20,7 +20,7 @@ app.use(bodyParser.json({
   limit: '300kb',
 }));
 
-app.use(logRequest);
+app.use(logRequestIfNotLogged);
 
 app.use('/', route);
 

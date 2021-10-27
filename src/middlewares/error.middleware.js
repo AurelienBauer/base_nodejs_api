@@ -19,7 +19,11 @@ export const handler = (err, req, res, next) => {
     success: false,
   };
 
-  logger.error(err);
+  logger.error({
+    message: response.message,
+    code: response.code,
+    userId: req.user && req.user._id ? req.user._id : null,
+  });
 
   res.status(response.code).json(response);
   next();

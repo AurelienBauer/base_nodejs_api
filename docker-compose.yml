@@ -12,7 +12,7 @@ services:
     environment:
       MONGO_HOST: mongodb://mongodb:27017/base_api
       NODE_ENV: development
-      RUN_ON_DOCKER:
+      RUN_ON_DOCKER: 1
     command: ./entrypoint.sh
   mongodb:
     image: mongo:5.0.3

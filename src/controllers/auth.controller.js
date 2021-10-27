@@ -13,7 +13,7 @@ const login = [
         errors: ['BAD_CREDENTIALS'],
       });
 
-      const user = await User.findOne({ username: req.body.username });
+      const user = await User.findOne({ username: req.body.username, isDeleted: false });
       if (!user) {
         return next(badCredentials);
       }
@@ -22,7 +22,10 @@ const login = [
         return next(badCredentials);
       }
 
-      req.user = user;
+      req.user = {
+        _id: user._id,
+        username: user.username,
+      };
       return next();
     }
 
@@ -36,8 +39,8 @@ const login = [
   async (req, res, next) => {
     try {
       const playload = {
-        email: req.user.username,
-        isAUser: true,
+        username: req.user.username,
+        userId: req.user._id,
       };
 
       const tokens = {};
@@ -65,8 +68,8 @@ const login = [
 const refreshToken = (req, res, next) => {
   try {
     const playload = {
-      email: req.user.name,
-      isAUser: true,
+      username: req.user.username,
+      userId: req.user._id,
     };
 
     const accessToken = generateAccessToken(playload);

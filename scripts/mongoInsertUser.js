@@ -28,6 +28,7 @@ const run = async () => {
     const result = await users.insertOne({
       username,
       passwordHash,
+      isDeleted: false,
     });
 
     console.log(`New user added with the _id: ${result.insertedId}`);

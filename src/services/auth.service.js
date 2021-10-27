@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import moment from 'moment-timezone';
 import bcrypt from 'bcrypt';
-import UserModel from '../models/users.model.js';
+import Users from '../models/users.model.js';
 
 function _token(playload, expiresIn) {
   const _playload = Object.assign(playload, {
@@ -23,17 +23,11 @@ export const generateRefreshToken = (playload) => {
 };
 
 export const getTokenInformation = async (decodedToken) => {
-  if (decodedToken.isAUser) {
-    const user = await UserModel.getUserByEmail(decodedToken.email);
-    return {
-      type: 'user',
-      body: user,
-    };
-  }
+  const user = await Users.findOne({ username: decodedToken.username, isDeleted: false });
   return {
-    type: 'api',
     body: {
-      name: decodedToken.apiName,
+      _id: user._id,
+      username: user.username,
     },
   };
 };

@@ -18,6 +18,6 @@ export default class ErrorApi extends Error {
     this.errors = errors;
     this.status = status;
     this.isPublic = isPublic;
-    this.stack = stack;
+    this.stack = process.env.NODE_ENV === 'production' ? 'No information in production' : stack;
   }
 }

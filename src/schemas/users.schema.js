@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 /**
- * Refresh Token Schema
+ * User Schema
  */
 const usersSchema = new mongoose.Schema({
   username: {

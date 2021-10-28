@@ -38,8 +38,8 @@ jobs:
       - name: 'Deploy to Azure Container Instances'
         uses: 'azure/aci-deploy@v1'
         with:
-          resource-group: Base_nodejs_api
-          dns-name-label: basenodejsapi${{ github.run_number }}
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          dns-name-label: ${{ secrets.DNS_NAME_LABEL }}${{ github.run_number }}
           image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:${{ github.sha }}
           registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}

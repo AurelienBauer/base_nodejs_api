@@ -19,9 +19,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      - name: Build docker Image
-        run: -t base_nodejs_api
         
       - name: 'Login via Azure CLI'
         uses: azure/login@v1

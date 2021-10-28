@@ -3,7 +3,7 @@ version: "3.1"
 services:
   nodeapi:
     build:
-      context: ../
+      context: ./
       dockerfile: ./docker.test/Dockerfile
     depends_on:
       - mongodb

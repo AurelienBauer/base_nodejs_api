@@ -4,9 +4,9 @@ RUN mkdir -p /var/www/base_nodejs_api
 
 WORKDIR /var/www/base_nodejs_api
 
-COPY . .
-
 COPY .env.test .env
+
+COPY . .
 
 RUN npm install
 

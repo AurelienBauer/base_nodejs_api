@@ -19,4 +19,4 @@ jobs:
       - name: Display local files
         run: ls -la
       - name: Build the docker-compose stack
-        run:  docker-compose -f docker.test/docker-compose.yml up --build
+        run:  docker-compose -f docker.test/docker-compose.yml up --build --abort-on-container-exit

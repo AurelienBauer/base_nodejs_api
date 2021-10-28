@@ -24,7 +24,7 @@ describe('Global API Integration Tests', () => {
       .end((err, res) => {
         expect(res.statusCode).to.equal(httpStatus.OK);
         expect(res.body.api_name).to.equal(process.env.PROJECT_NAME);
-        expect(res.body.api_status).to.equal('Ruing');
+        expect(res.body.api_status).to.equal('Running');
         expect(res.body.success).to.equal(true);
         done();
       });

@@ -14,5 +14,9 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
+      - name: display local pwd
+        run: pwd
+      - name: Display local files
+        run: ls -la
       - name: Build the docker-compose stack
         run:  docker-compose -f docker.test/docker-compose.yml up --build

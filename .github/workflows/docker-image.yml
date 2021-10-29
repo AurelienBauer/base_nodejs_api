@@ -2,9 +2,9 @@ name: Node Api run tests
 
 on:
   push:
-    branches: [ master, dev ]
+    branches: [ dev ]
   pull_request:
-    branches: [ master, dev ]
+    branches: [ dev ]
   schedule:
   - cron: "0 0 * * ?"
   workflow_dispatch:

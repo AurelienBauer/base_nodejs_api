@@ -3,7 +3,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import https from 'https';
+import http from 'http';
 import fs from 'fs';
 import connectDb from './services/mongoose.service.js';
 import { logger, logRequestIfNotLogged } from './services/logger.service.js';
@@ -33,13 +33,17 @@ if (!fs.existsSync('server.key.pem') || !fs.existsSync('server.cert.pem')) {
   process.exit(1);
 }
 
+/*
 const options = {
   key: fs.readFileSync('server.key.pem'),
   cert: fs.readFileSync('server.cert.pem'),
 };
+*/
 
-const runServer = () => https.createServer(options, app).listen(process.env.PORT, () => {
-  logger.info(`${process.env.PROJECT_NAME} - Server started on port ${process.env.PORT} (${process.env.NODE_ENV}).`);
+const port = process.env.PORT || 3000;
+
+const runServer = () => http.createServer(app).listen(port, () => {
+  logger.info(`${process.env.PROJECT_NAME} - Server started on port ${port} (${process.env.NODE_ENV}).`);
 }).on('error', (err) => {
   logger.error(`Run server error: ${err}`);
 });

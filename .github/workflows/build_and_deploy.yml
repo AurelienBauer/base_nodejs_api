@@ -24,7 +24,7 @@ jobs:
         id: time
         uses: nanzm/get-time-action@v1.1
         with:
-          timeZone: 8
+          timeZone: 2
           format: 'YYYY-MM-DD-HH-mm-ss'
       
       - name: 'Login via Azure CLI'
@@ -39,15 +39,28 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-           docker build -f ./docker.production/Dockerfile . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:${{ steps.time.outputs.time }}
+           docker build -f ./docker.production/Dockerfile . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:${{ steps.time.outputs.time }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:latest
            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:${{ steps.time.outputs.time }}
+           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:latest
            
-      - name: 'Deploy to Azure Container Instances'
+      - name: 'Deploy to Azure Container Instances image with timestamp'
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
           dns-name-label: ${{ secrets.DNS_NAME_LABEL }}${{ github.run_number }}
           image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:${{ steps.time.outputs.time }}
+          registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          name: basenodejsapi
+          location: 'francecentral'
+          
+      - name: 'Deploy to Azure Container Instances latest image'
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          dns-name-label: ${{ secrets.DNS_NAME_LABEL }}${{ github.run_number }}
+          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:latest
           registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}

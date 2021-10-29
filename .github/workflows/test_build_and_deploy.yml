@@ -41,7 +41,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-           docker build -f ./docker.production/Dockerfile . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:${{ steps.time.outputs.time }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:latest
+           docker build --build-arg ARG_JWT_SECRET=${{ secrets.JWT_SECRET }} -f ./docker.production/Dockerfile . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:${{ steps.time.outputs.time }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:latest
            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:${{ steps.time.outputs.time }}
            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/base_nodejs_api:latest
            

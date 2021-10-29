@@ -3,7 +3,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import http from 'http';
+import https from 'https';
 import fs from 'fs';
 import connectDb from './services/mongoose.service.js';
 import { logger, logRequestIfNotLogged } from './services/logger.service.js';
@@ -42,7 +42,7 @@ const options = {
 
 const port = process.env.PORT || 3000;
 
-const runServer = () => http.createServer(app).listen(port, () => {
+const runServer = () => https.createServer(app).listen(port, () => {
   logger.info(`${process.env.PROJECT_NAME} - Server started on port ${port} (${process.env.NODE_ENV}).`);
 }).on('error', (err) => {
   logger.error(`Run server error: ${err}`);

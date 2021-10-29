@@ -2,11 +2,10 @@ name: Build image and push it to azure
 
 # Controls when the workflow will run
 on:
-  workflow_run:
-    workflows: ["Node Api run tests"]
-    branches: [master]
-    types: 
-      - completed
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,6 +30,9 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Build the docker-compose and run integration tests
+        run:  docker-compose -f docker.test/docker-compose.yml up --build --abort-on-container-exit
       
       - name: 'Build and push image'
         uses: azure/docker-login@v1

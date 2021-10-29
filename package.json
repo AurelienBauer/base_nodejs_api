@@ -9,7 +9,7 @@
     "start": "pm2 src/app.js",
     "dev": "nodemon -r dotenv/config src/app.js",
     "dev.docker": "nodemon --legacy-watch -r dotenv/config src/app.js",
-    "test": "MONGO_HOST=mongodb://mongodb:27017/test_base_api PORT=3001 NODE_ENV=production RUN_ON_DOCKER=0 mocha --timeout 100000 ./test/**/*.js --exit",
+    "test": "mocha --timeout 100000 ./test/**/*.js --exit",
     "lint": "npm run lint:sources && npm run lint:test",
     "lint:test": "./node_modules/eslint/bin/eslint.js 'test/**/**.js'",
     "lint:sources": "./node_modules/eslint/bin/eslint.js 'src/**/**.js'",

@@ -3,8 +3,6 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import https from 'https';
-import fs from 'fs';
 import connectDb from './services/mongoose.service.js';
 import { logger, logRequestIfNotLogged } from './services/logger.service.js';
 import route from './routes/index.js';
@@ -28,21 +26,9 @@ app.use(notFound);
 
 app.use(handler);
 
-if (!fs.existsSync('server.key.pem') || !fs.existsSync('server.cert.pem')) {
-  logger.warn("API didn't find SSL files.");
-  process.exit(1);
-}
-
-/*
-const options = {
-  key: fs.readFileSync('server.key.pem'),
-  cert: fs.readFileSync('server.cert.pem'),
-};
-*/
-
 const port = process.env.PORT || 3000;
 
-const runServer = () => https.createServer(app).listen(port, () => {
+const runServer = () => app.listen(port, () => {
   logger.info(`${process.env.PROJECT_NAME} - Server started on port ${port} (${process.env.NODE_ENV}).`);
 }).on('error', (err) => {
   logger.error(`Run server error: ${err}`);
